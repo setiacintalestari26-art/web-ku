@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>setiacintalestari · 5 menu 2 section</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Georgia', 'Times New Roman', 'Segoe UI', serif;
+        }
+
+        body {
+            background: #fddde6;
+            color: #3b2b2b;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+/* ===== NAVIGASI HORIZONTAL DI ATAS (KANAN) ===== */
+        .top-nav {
+            background: #fff9fb;
+            padding: 15px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            border-bottom: 4px double #f9bacb;
+            box-shadow: 0 5px 20px rgba(243, 150, 180, 0.3);
+            background-image: radial-gradient(circle at 10% 50%, #ffe4ec 3px, transparent 3px),
+                              radial-gradient(circle at 95% 30%, #ffe4ec 4px, transparent 4px);
+            background-size: 45px 45px;
+            flex-shrink: 0;
+            z-index: 30;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #ac5f7a;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: 0.2s ease;
+            display: inline-block;
+            padding: 8px 25px;
+            border-radius: 40px;
+            background: rgba(255, 230, 240, 0.9);
+            border: 1px solid #ffcfdf;
+            box-shadow: 0 2px 6px #fbc1d1;
+            letter-spacing: 0.5px;        
+            cursor: pointer;
+        }
+
+        .nav-links a:hover {
+            background: #ffc0d5;
+            color: #581b38;
+            border-color: #ff90b5;
+            transform: scale(1.05) translateY(-2px);
+        }
+
+        .nav-links a.active {
+            background: #ffc0d5;
+            color: #581b38;
+            border-color: #ff90b5;
+            box-shadow: 0 4px 10px #f59dbb;
+        }
+
+        /* ===== KONTEN UTAMA ===== */
+        .main-content {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Container untuk setiap pasangan section (2 section per menu) */
+        .menu-page {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .menu-page.active-page {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Dalam setiap menu-page ada 2 section yang membagi tinggi layar */
+        .page-section {
+            flex: 1; /* Masing-masing 1/2 tinggi layar */
+            min-height: 0;
+            padding: 25px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            background: rgba(255, 245, 248, 0.5);
+            border-bottom: 2px dashed #ffd0df;
+            overflow-y: auto;
+        }
+
+        .page-section:last-child {
+            border-bottom: none;
+        }
+
+        /* hiasan latar stiker */
+        .page-section::before {
+            content: "🌸🍰🎀🧸☁️";
+            position: absolute;
+            bottom: 5px;
+            right: 15px;
+            font-size: 2.5rem;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* ===== HOME PAGE - SECTION 1 & 2 ===== */
+        #home-page .section-1 {
+            background: linear-gradient(145deg, #ffe7ef, #ffdbe8);
+            flex-direction: row;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .home-text h1 {
+            font-size: 42px;
+            font-weight: 800;
+            color: #602842;
+            text-shadow: 2px 2px 0 #ffb7c5;
+            font-family: 'Georgia', serif;
+        }
+
+        .home-text h2 {
+            font-size: 20px;
+            font-weight: 400;
+            margin-bottom: 8px;
+            color: #9f4968;
+            font-style: italic;
+        }
+
+        .home-text p {
+            max-width: 500px;
+            line-height: 1.5;
+            color: #4a303a;
+            background: rgba(255, 255, 255, 0.6);
+            padding: 12px 18px;
+            border-radius: 40px 20px 40px 20px;
+            border: 2px dashed #fcaac0;
+            font-size: 0.95rem;
+        }
+
+        .home-img {
+            width: 150px;
+            border-radius: 50% 50% 30% 70% / 60% 40% 60% 40%;
+            box-shadow: 0 15px 30px #f6aec6;
+            border: 7px double #fceaea;
+            background: white;
+            padding: 5px;
+            transform: rotate(2deg);
+        }
+
+        /* ===== SECTION TITLE ===== */
+        .section-title {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 2px;
+            color: #c47694;
+            font-weight: 400;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .section-title::after {
+            content: "🎀";
+            font-size: 12px;
+        }
+
+        .section-heading {
+            font-size: 18px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: #491f32;
+            border-left: 5px double #ff99bb;
+            padding-left: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* ===== TABEL ===== */
+        .bio-table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 600px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(3px);
+            border-radius: 30px;
+            box-shadow: 0 8px 20px #fec7d7;
+            font-size: 0.95rem;
+        }
+
+        .bio-table td {
+            padding: 8px 12px;
+            border-bottom: 2px dotted #ffb8cf;
+        }
+
+        .bio-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .label {
+            font-weight: 700;
+            width: 130px;
+            color: #88435c;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff9ebb" width="16px" height="16px"><path d="M12 2C8 2 4 5 4 9c0 2.5 1.5 5 4 7 1 1 2 2 2 3v2h4v-2c0-1 1-2 2-3 2.5-2 4-4.5 4-7 0-4-4-7-8-7z"/></svg>') no-repeat left center;
+            background-size: 16px;
+            padding-left: 24px;
+        }
+
+        /* ===== SKILL & EDUCATION ===== */
+        .skill-text, .edu-text, .intro-text, .hobby-text, .goal-text, .quote-text {
+            max-width: 650px;
+            font-size: 1rem;
+            line-height: 1.6;
+            background: #ffffffd6;
+            padding: 15px 20px;
+            border-radius: 40px 20px 40px 20px;
+            color: #422c33;
+            border: 2px solid #ffc1d4;
+            box-shadow: 0 5px 0 #fdc7db;
+            position: relative;
+            z-index: 5;
+        }
+
+        .edu-text {
+            border-radius: 20px 40px 20px 40px;
+            border: 2px solid #b3d9c6;
+            box-shadow: 0 5px 0 #c7e3d6;
+            color: #2e4d3e;
+        }
+
+        .footer-sticker {
+            font-size: 1.8rem;
+            margin-top: 8px;
+            opacity: 0.7;
+        }
+
+        img {
+            object-fit: cover;
+        }
+
+        /* Stiker khusus untuk setiap section */
+        #home-page .section-1::before {
+            content: "☁️🤍👧🏻🍰";
+            bottom: 5px;
+            left: 15px;
+            right: auto;
+            opacity: 0.2;
+        }
+        #home-page .section-2::before {
+            content: "🏠🌸🧸☁️";
+            bottom: 5px;
+            right: 15px;
+        }
+        #about-page .section-1::before {
+            content: "🧸📖🕯️🎀";
+            bottom: 5px;
+            left: 15px;
+        }
+        #about-page .section-2::before {
+            content: "👧🏻📋✨🧷";
+            bottom: 5px;
+            right: 15px;
+        }
+        #skills-page .section-1::before {
+            content: "🍳🧁🍰🥄";
+            bottom: 5px;
+            left: 15px;
+        }
+        #skills-page .section-2::before {
+            content: "🎨✂️🧵🖌️";
+            bottom: 5px;
+            right: 15px;
+        }
+        #education-page .section-1::before {
+            content: "📓✏️🎀📚";
+            bottom: 5px;
+            left: 15px;
+        }
+        #education-page .section-2::before {
+            content: "🏫🎒📝⭐";
+            bottom: 5px;
+            right: 15px;
+        }
+        #contact-page .section-1::before {
+            content: "📬💌🏩☎️";
+            bottom: 5px;
+            left: 15px;
+        }
+        #contact-page .section-2::before {
+            content: "📱💻🌐📧";
+            bottom: 5px;
+            right: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGASI 5 MENU DI KANAN ATAS -->
+    <div class="top-nav">
+        <div class="nav-links">
+            <a class="active" data-page="home">🏠 home</a>
+            <a data-page="about">🧸 about</a>
+            <a data-page="skills">🍰 skills</a>
+            <a data-page="education">📖 education</a>
+            <a data-page="contact">💌 contact</a>
+        </div>
+    </div>
+
+    <!-- KONTEN UTAMA - 5 MENU, MASING-MASING 2 SECTION -->
+    <div class="main-content">
+        <!-- HOME PAGE (2 SECTION) -->
+        <div id="home-page" class="menu-page active-page">
+            <!-- SECTION 1 HOME -->
+            <div class="page-section section-1">
+                <div class="home-text">
+                    <h1>HELLO!</h1>
+                    <h2>Saya Setia Cinta Lestari</h2>
+                    <p>
+                        𖹭 Selamat datang di dunia ku yang penuh warna dan manis! 𖹭
+                    </p>
+                    <div style="margin-top: 10px; font-size: 1.5rem;">
+                        🧸 🍰 🎀 ☁️
+                    </div>
+                </div>
+                <img src="cinta.jpeg" alt="Foto Setia Cinta Lestari" class="home-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22150%22 height=%22150%22 viewBox=%220 0 100 100%22><circle cx=%2250%22 cy=%2250%22 r=%2245%22 fill=%22%23ffd9e6%22/><text x=%2250%22 y=%2270%22 font-size=%2240%22 text-anchor=%22middle%22 fill=%22%23ac5f7a%22>🌸</text></svg>';">
+            </div>
+            <!-- SECTION 2 HOME -->
+            <div class="page-section section-2">
+                <span class="section-title">perkenalan</span>
+                <h2 class="section-heading">intro</h2>
+                <div class="intro-text">
+                    ✨ Halo! Aku seorang pelajar yang suka dengan hal-hal manis dan estetik.<br>
+                    🌸 Kelas XI.MERDEKA.2, no absen 23. Tinggal di Bumidaya, Kec. Palas.<br>
+                    ☁️ Selalu coba hal baru dan pengen terus belajar.
+                </div>
+                <div class="footer-sticker">🌸👧🏻</div>
+            </div>
+        </div>
+
+        <!-- ABOUT PAGE (2 SECTION) -->
+        <div id="about-page" class="menu-page">
+            <!-- SECTION 1 ABOUT (BIODATA) -->
+            <div class="page-section section-1">
+                <span class="section-title">tentang aku</span>
+                <h2 class="section-heading">biodata diri</h2>
+                <table class="bio-table">
+                    <tr><td class="label">Nama Lengkap</td><td>Setia Cinta Lestari</td></tr>
+                    <tr><td class="label">Kelas</td><td>XI.MERDEKA.2</td></tr>
+                    <tr><td class="label">No Absen</td><td>23</td></tr>
+                    <tr><td class="label">NISN</td><td>0094019178</td></tr>
+                    <tr><td class="label">Tanggal Lahir</td><td>26 Maret 2009</td></tr>
+                </table>
+                <div class="footer-sticker">🎀 🤍</div>
+            </div>
+            <!-- SECTION 2 ABOUT (HOBI) -->
+            <div class="page-section section-2">
+                <span class="section-title">hobi & minat</span>
+                <h2 class="section-heading">hobbies</h2>
+                <div class="hobby-text">
+                    🎀 Memasak dan mencoba resep baru<br>
+                    🧸 Mendengarkan musik sambil belajar<br>
+                    📖 Membaca buku cerita<br>
+                    ✨ Mengoleksi barang-barang estetik
+                </div>
+                <div class="footer-sticker">🧸🎵</div>
+            </div>
+        </div>
+
+        <!-- SKILLS PAGE (2 SECTION) -->
+        <div id="skills-page" class="menu-page">
+            <!-- SECTION 1 SKILLS (MEMASAK) -->
+            <div class="page-section section-1">
+                <span class="section-title">kemampuan utama</span>
+                <h2 class="section-heading">cooking skills</h2>
+                <div class="skill-text">
+                    🍳 Memasak untuk keluarga tercinta — sarapan, makan siang, makan malam.<br>
+                    🧁 Dari bahan sederhana jadi hidangan yang enak dan disukai.<br>
+                    ✨ Suka menghidangkan dengan sentuhan estetik.
+                </div>
+            </div>
+            <!-- SECTION 2 SKILLS (KREATIF) -->
+            <div class="page-section section-2">
+                <span class="section-title">kemampuan lain</span>
+                <h2 class="section-heading">creative skills</h2>
+                <div class="skill-text" style="border-color: #f7b0c5;">
+                    🎨 Menghias makanan biar cantik<br>
+                    ✂️ Membuat kerajinan sederhana<br>
+                    📸 Fotografi makanan<br>
+                    🖌️ Sedikit bisa menggambar
+                </div>
+                <div class="footer-sticker">🎨✨</div>
+            </div>
+        </div>
+
+        <!-- EDUCATION PAGE (2 SECTION) -->
+        <div id="education-page" class="menu-page">
+            <!-- SECTION 1 EDUCATION (SEKARANG) -->
+            <div class="page-section section-1">
+                <span class="section-title">pendidikan saat ini</span>
+                <h2 class="section-heading">current education</h2>
+                <div class="edu-text">
+                    📚🎀 Kelas XI.MERDEKA.2<br>
+                    🌷 Semangat belajar hal baru<br>
+                    📖 Fokus sama pelajaran yang disukai
+                </div>
+            </div>
+            <!-- SECTION 2 EDUCATION (CITA-CITA) -->
+            <div class="page-section section-2">
+                <span class="section-title">cita-cita</span>
+                <h2 class="section-heading">future goals</h2>
+                <div class="goal-text" style="background: #e6f3f0; border-color: #a5cfc5; border-radius: 20px 40px 20px 40px;">
+                    ⭐ Ingin lanjut kuliah di bidang yang aku suka<br>
+                    📚 Jadi orang yang berguna bagi keluarga<br>
+                    🌸 Terus belajar dan berkembang
+                </div>
+                <div class="footer-sticker">⭐📚</div>
+            </div>
+        </div>
+
+        <!-- CONTACT PAGE (2 SECTION) -->
+        <div id="contact-page" class="menu-page">
+            <!-- SECTION 1 CONTACT (KONTAK) -->
+            <div class="page-section section-1">
+                <span class="section-title">kontak</span>
+                <h2 class="section-heading">contact info</h2>
+                <table class="bio-table">
+                    <tr><td class="label">No Telepon</td><td>📞 081368251771</td></tr>
+                    <tr><td class="label">Email</td><td>📧 setiacintalestari26@gmail.com</td></tr>
+                    <tr><td class="label">Alamat</td><td>🏡 Bumidaya, Kec. Palas</td></tr>
+                    <tr><td class="label">Instagram</td><td>📸 @ftyaa_ci</td></tr>
+                </table>
+            </div>
+            <!-- SECTION 2 CONTACT (PESAN) -->
+            <div class="page-section section-2">
+                <span class="section-title">pesan</span>
+                <h2 class="section-heading">get in touch</h2>
+                <div class="quote-text" style="background: #fff0f7;">
+                    💌 Jangan ragu untuk menghubungi!<br>
+                    🎀 Senang kenalan sama teman baru<br>
+                    ☁️ Mari ngobrol dan berbagi cerita
+                </div>
+                <div style="font-size: 2rem; margin-top: 10px;">💌🎀</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fallback gambar
+        document.querySelectorAll('img').forEach(img => {
+            img.onerror = function() {
+                this.src = 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150" viewBox="0 0 100 100"><circle cx="50" cy="50" r="45" fill="%23ffd9e6"/><text x="50" y="70" font-size="40" text-anchor="middle" fill="%23ac5f7a">🌸</text></svg>';
+            }
+        });
+
+        // Fungsi untuk ganti page (masing-masing 2 section)
+        const menuLinks = document.querySelectorAll('.nav-links a');
+        const pages = {
+            home: document.getElementById('home-page'),
+            about: document.getElementById('about-page'),
+            skills: document.getElementById('skills-page'),
+            education: document.getElementById('education-page'),
+            contact: document.getElementById('contact-page')
+        };
+
+        function showPage(pageId) {
+            // Sembunyikan semua page
+            Object.values(pages).forEach(page => {
+                page.classList.remove('active-page');
+            });
+            
+            // Tampilkan page yang dipilih
+            if (pages[pageId]) {
+                pages[pageId].classList.add('active-page');
+            }
+            
+            // Update active class di menu
+            menuLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-page') === pageId) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Tambahkan event listener ke setiap menu
+        menuLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const pageId = this.getAttribute('data-page');
+                showPage(pageId);
+            });
+        });
+
+        // Set default: home aktif
+        showPage('home');
+    </script>
+</body>
+</html>
